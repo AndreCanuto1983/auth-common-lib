@@ -2,6 +2,12 @@
 
 A .NET library for generating, validating, and configuring JWT authentication, supporting custom roles and easy integration into ASP.NET applications.
 
+## Nuget Download
+- dotnet add package Auth.Common.Lib --version 1.0.2
+
+## Package Reference
+  <PackageReference Include="Auth.Common.Lib" Version="1.0.2" />
+
 ## Features
 
 - **JWT token generation** with custom information (email, roles, channel, CNPJ, expiration time).
