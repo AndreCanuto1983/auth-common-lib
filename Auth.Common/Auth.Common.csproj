@@ -4,7 +4,7 @@
 		<TargetFramework>net10.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-		<PackageId>Auth.Common.Main</PackageId>
+		<PackageId>Auth.Common.Lib</PackageId>
 		<Version>1.0.2</Version>
 		<Authors>Canuto</Authors>
 		<Company>ALCS</Company>
