@@ -1,4 +1,4 @@
-# Auth.Common
+# Auth.Common.Lib
 
 A .NET library for generating, validating, and configuring JWT authentication, supporting custom roles and easy integration into ASP.NET applications.
 
