@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Auth.Common\Auth.Common.csproj" />
+    <ProjectReference Include="..\..\Auth.Common\Auth.Common.Lib.csproj" />
   </ItemGroup>
 
 </Project>

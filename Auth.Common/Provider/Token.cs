@@ -1,11 +1,11 @@
-﻿using Auth.Common.Model;
+﻿using Auth.Common.Lib.Model;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace Auth.Common.Provider
+namespace Auth.Common.Lib.Provider
 {
     public static class Token
     {

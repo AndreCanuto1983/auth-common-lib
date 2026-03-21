@@ -1,8 +1,8 @@
-﻿using Auth.Common.Enums;
+﻿using Auth.Common.Lib.Enums;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace Auth.Common.Model
+namespace Auth.Common.Lib.Model
 {
     public class CustomToken
     {

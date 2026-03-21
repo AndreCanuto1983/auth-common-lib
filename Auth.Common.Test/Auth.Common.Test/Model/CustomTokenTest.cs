@@ -1,7 +1,7 @@
-﻿using Auth.Common.Model;
+﻿using Auth.Common.Lib.Model;
 using System.ComponentModel.DataAnnotations;
 
-namespace Auth.Common.Test.Model
+namespace Auth.Common.Lib.Test.Model
 {
     public class CustomTokenTest
     {

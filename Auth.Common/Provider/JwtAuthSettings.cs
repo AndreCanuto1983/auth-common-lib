@@ -4,7 +4,7 @@ using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Text;
 
-namespace Auth.Common.Provider
+namespace Auth.Common.Lib.Provider
 {
     public static class JwtAuthSettings
     {

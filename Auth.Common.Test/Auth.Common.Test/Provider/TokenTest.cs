@@ -1,7 +1,7 @@
-﻿using Auth.Common.Model;
-using Auth.Common.Provider;
+﻿using Auth.Common.Lib.Model;
+using Auth.Common.Lib.Provider;
 
-namespace Auth.Common.Test.Provider
+namespace Auth.Common.Lib.Test.Provider
 {
     public class TokenTest
     {

@@ -1,4 +1,4 @@
-﻿namespace Auth.Common.Enums
+﻿namespace Auth.Common.Lib.Enums
 {
     public enum DefaultRoles
     {
