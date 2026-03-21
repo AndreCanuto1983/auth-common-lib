@@ -1,8 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net10.0;net9.0;net8.0;net6.0;net5.0</TargetFrameworks>
-		<ImplicitUsings Condition="'$(TargetFramework)' != 'net5.0'">enable</ImplicitUsings>
+		<TargetFrameworks>net10.0;net9.0;net8.0;net6.0</TargetFrameworks>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<PackageId>Auth.Common.Lib</PackageId>
 		<Version>1.0.3</Version>
@@ -35,11 +34,5 @@
 		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.34.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.20" />
 	</ItemGroup>
-
-	<ItemGroup Condition="'$(TargetFramework)' == 'net5.0'">
-		<PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.34.0" />
-		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.34.0" />
-		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.17" />
-	</ItemGroup>
-
+	
 </Project>
