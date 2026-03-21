@@ -7,12 +7,12 @@ A .NET library for generating, validating, and configuring JWT authentication, s
 
 ## Nuget Download
 ```
-dotnet add package Auth.Common.Lib --version 1.0.2
+dotnet add package Auth.Common.Lib --version 1.0.3
 ```
 
 ## Package Reference
 ```
-<PackageReference Include="Auth.Common.Lib" Version="1.0.2" />
+<PackageReference Include="Auth.Common.Lib" Version="1.0.3" />
 ```
 
 ## Features
