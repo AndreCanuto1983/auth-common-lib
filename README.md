@@ -109,6 +109,6 @@ services.AddJwtAuthSettings();
 
 ## Requirements
 
-- .NET 10
+- .NET 10, 9, 8, or 6
 - Microsoft.AspNetCore.Authentication.JwtBearer
 - Microsoft.IdentityModel.Tokens
