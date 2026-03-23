@@ -6,19 +6,14 @@ A .NET library for generating, validating, and configuring JWT authentication, s
 - Backward compatibility with .Net versions 6, 8, 9, and 10.
 
 ## Nuget Download
-```
-dotnet add package Auth.Common.Lib --version 1.0.4
-```
 
 - Version 1.0.5 has a new method that generates dynamic claims for the token when a level 1 object is provided.
+
 ```
 dotnet add package Auth.Common.Lib --version 1.0.5
 ```
 
 ## Package Reference
-```
-<PackageReference Include="Auth.Common.Lib" Version="1.0.4" />
-```
 ```
 <PackageReference Include="Auth.Common.Lib" Version="1.0.5" />
 ```
@@ -73,7 +68,8 @@ Model for token generation:
 ## Usage Example
 
 ```csharp
-// Token generation
+// Token generation custom object
+
 var customToken = new CustomToken
 {
     Email = "user@example.com",
@@ -83,7 +79,19 @@ var customToken = new CustomToken
     Cnpj = "12345678901234"
 };
 
-string token = Token.GenerateToken(customToken);
+or
+
+dynamic customTokenDynamic = new ExpandoObject
+        {
+            Email = "user@example.com",
+            Roles = "Admin",
+            Channel = "99",
+            ExpiryTimeInMinutes = 180,
+            Cnpj = "12345678901234"
+        };
+
+var customToken = Token.GenerateCustomToken(customTokenDynamic);
+var token = Token.GenerateToken(customToken);
 
 // Token validation
 bool isValid = Token.TokenValidate(token);
