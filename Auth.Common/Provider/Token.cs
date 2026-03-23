@@ -1,7 +1,9 @@
 ﻿using Auth.Common.Lib.Model;
 using Microsoft.IdentityModel.Tokens;
 using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Reflection;
 using System.Security.Claims;
 using System.Text;
 
@@ -9,6 +11,44 @@ namespace Auth.Common.Lib.Provider
 {
     public static class Token
     {
+        public static string GenerateCustomToken(dynamic customData)
+        {
+            var issuer = Environment.GetEnvironmentVariable("ISSUER");
+            var audience = Environment.GetEnvironmentVariable("AUDIENCE");
+            var secret = Environment.GetEnvironmentVariable("DEFAULTSECRET");
+
+            var claims = new List<Claim>();
+
+            foreach (PropertyInfo prop in customData.GetType().GetProperties())
+            {
+                var value = prop.GetValue(customData, null);
+                if (value != null)
+                {
+                    claims.Add(new Claim(prop.Name, value.ToString()));
+                }
+            }
+
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(claims),
+                Issuer = issuer,
+                Audience = audience,
+                Expires = customData.ExpiryTimeInMinutes.HasValue
+                    ? DateTime.UtcNow.AddMinutes(customData.ExpiryTimeInMinutes.Value)
+                    : DateTime.UtcNow.AddMinutes(60), //If is null, add 1 hour to the token expiration time.
+                SigningCredentials = new SigningCredentials(
+                    new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secret)),
+                    SecurityAlgorithms.HmacSha256Signature),
+                NotBefore = DateTime.UtcNow
+            };
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+
+            return tokenHandler.WriteToken(token);
+        }
+
         public static string GenerateToken(CustomToken customToken)
         {
             var issuer = Environment.GetEnvironmentVariable("ISSUER");
