@@ -27,7 +27,7 @@ dotnet add package Auth.Common.Lib --version 1.0.5
 
 ## Installation
 
-Add a reference to the `Auth.Common` project in your .NET 10 solution.
+Add a reference to the `Auth.Common.Lib` project in your .NET 10, 9, 8, 6 solution.
 
 ## Environment Configuration
 
@@ -94,6 +94,7 @@ var customToken = Token.GenerateCustomToken(customTokenDynamic);
 var token = Token.GenerateToken(customToken);
 
 // Token validation
+bool isValid = Token.GenerateCustomToken(token);
 bool isValid = Token.TokenValidate(token);
 ```
 
