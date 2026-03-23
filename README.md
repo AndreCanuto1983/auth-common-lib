@@ -100,8 +100,8 @@ bool isValid = Token.TokenValidate(token);
 
 ### ASP.NET Core Configuration
 
-In your `Startup.cs` or project builder:
 For Swagger to validate your token, you can implement this in your projects that will receive the token for validation.
+In your `Startup.cs` or project builder:
 
 ```csharp
 services.AddJwtAuthSettings();
