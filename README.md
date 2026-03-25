@@ -5,20 +5,24 @@ A .NET library for generating, validating, and configuring JWT authentication, s
 ##
 - Backward compatibility with .Net versions 6, 8, 9, and 10.
 
-# Melhorias nesta versão
+# Improvements in version 1.0.9
+- Everything from the previous version
+- Implemented method to read the token and return the claims.
+- Dynamic secrets generator for use in APIs
+
+# Improvements in version 1.0.8
 - Improvement in the custom token generation function and adding new parameters in the token object with predefined data
+- A new method that generates dynamic claims for the token when a level 1 object is provided.
 
 ## Nuget Download
 
-- Version 1.0.6 has a new method that generates dynamic claims for the token when a level 1 object is provided.
-
 ```
-dotnet add package Auth.Common.Lib --version 1.0.8
+dotnet add package Auth.Common.Lib --version 1.0.9
 ```
 
 ## Package Reference
 ```
-<PackageReference Include="Auth.Common.Lib" Version="1.0.8" />
+<PackageReference Include="Auth.Common.Lib" Version="1.0.9" />
 ```
 
 ## Features

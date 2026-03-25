@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Reflection;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace Auth.Common.Lib.Provider
@@ -40,7 +41,7 @@ namespace Auth.Common.Lib.Provider
                 Expires = DateTime.UtcNow.AddMinutes(expiryTimeInMinutes),
                 SigningCredentials = new SigningCredentials(
                     new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secret)),
-                    SecurityAlgorithms.HmacSha256Signature),
+                    SecurityAlgorithms.HmacSha512Signature),
                 NotBefore = DateTime.UtcNow
             };
 
@@ -91,7 +92,7 @@ namespace Auth.Common.Lib.Provider
                 Expires = DateTime.UtcNow.AddMinutes(customToken?.ExpiryTimeInMinutes ?? 60),
                 SigningCredentials = new SigningCredentials(
                     new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secret)),
-                    SecurityAlgorithms.HmacSha256Signature),
+                    SecurityAlgorithms.HmacSha512Signature),
                 NotBefore = DateTime.UtcNow
             };
 
@@ -135,7 +136,7 @@ namespace Auth.Common.Lib.Provider
                 tokenHandler.ValidateToken(token, tokenValidationParameters, out var securityToken);
 
                 if (securityToken is not JwtSecurityToken jwtSecurityToken ||
-                    !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
+                    !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha512, StringComparison.InvariantCultureIgnoreCase))
                     return false;
 
                 return true;
@@ -145,6 +146,39 @@ namespace Auth.Common.Lib.Provider
                 return false;
                 throw;
             }
+        }
+
+        /*
+         * Get all token claims
+         */
+        public static dynamic ReadToken(this string token)
+        {
+            try
+            {
+                var handler = new JwtSecurityTokenHandler();
+                var jwtToken = handler.ReadJwtToken(token);
+
+                IDictionary<string, object> claimsDict = new Dictionary<string, object>();
+                foreach (var claim in jwtToken.Claims)
+                {
+                    claimsDict[claim.Type] = claim.Value;
+                }
+
+                return claimsDict;
+            }
+            catch
+            {
+                return string.Empty;
+            }
+        }
+
+        /*
+         * Dynamic secrets generator for use in APIs
+         */
+        public static string GenerateSecret(int size = 64)
+        {
+            var randomBytes = RandomNumberGenerator.GetBytes(size);
+            return Convert.ToBase64String(randomBytes);
         }
     }
 }

@@ -1,6 +1,9 @@
 ﻿using Auth.Common.Lib.Model;
 using Auth.Common.Lib.Provider;
+using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 
 namespace Auth.Common.Lib.Test.Provider
 {
@@ -15,7 +18,7 @@ namespace Auth.Common.Lib.Test.Provider
                 UserId = 123,
                 CustomerId = 456,
                 AccountStatus = "Active",
-                Cnpj = "12345678000199"                
+                Cnpj = "12345678000199"
             };
 
             // Configura variáveis de ambiente usadas pelo método
@@ -126,6 +129,55 @@ namespace Auth.Common.Lib.Test.Provider
             {
                 Environment.SetEnvironmentVariable("ISSUER", prevIssuer);
             }
+        }
+
+        [Fact]
+        public void ReadToken_ShouldReturnClaimsDictionary_WhenTokenIsValid()
+        {
+            // Arrange: cria um token de teste
+            var secret = "supersecretkey1234567890lkasdflkaskdasl";
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret));
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+            var claims = new[]
+            {
+            new Claim("UserId", "123"),
+            new Claim("Email", "user@example.com"),
+            new Claim("Role", "Admin")
+        };
+
+            var token = new JwtSecurityToken(
+                issuer: "TestIssuer",
+                audience: "TestAudience",
+                claims: claims,
+                expires: DateTime.UtcNow.AddMinutes(5),
+                signingCredentials: creds
+            );
+
+            var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
+
+            // Act: chama sua função
+            var result = tokenString.ReadToken();
+
+            // Assert: verifica se os claims foram retornados corretamente
+            Assert.NotNull(result);
+            Assert.Equal("123", result["UserId"]);
+            Assert.Equal("user@example.com", result["Email"]);
+            Assert.Equal("Admin", result["Role"]);
+        }
+
+        [Fact]
+        public void ReadToken_ShouldReturnEmptyString_WhenTokenIsInvalid()
+        {
+            // Arrange: token inválido
+            var invalidToken = "abc.def.ghi";
+
+            // Act
+            var result = invalidToken.ReadToken();
+
+            // Assert
+            Assert.Equal(string.Empty, result);
+
         }
     }
 }
