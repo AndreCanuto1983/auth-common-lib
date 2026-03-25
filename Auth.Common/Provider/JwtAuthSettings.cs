@@ -6,6 +6,10 @@ using System.Text;
 
 namespace Auth.Common.Lib.Provider
 {
+    /*
+     * In the startup or program, use builder.Services.AddJwtAuthSettings(); or services.AddJwtAuthSettings(); so that token validation in Swagger works. 
+     * Don't forget to have the environment variables configured.
+     */
     public static class JwtAuthSettings
     {
         public static void AddJwtAuthSettings(this IServiceCollection services)
@@ -21,9 +25,9 @@ namespace Auth.Common.Lib.Provider
             }).AddJwtBearer(x =>
             {
                 x.RequireHttpsMetadata = false; //require https
-                x.SaveToken = true;
+                x.SaveToken = true;                
                 x.TokenValidationParameters = new TokenValidationParameters
-                {
+                {                    
                     ValidateIssuerSigningKey = true, //enable key validation
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secret)), //secret
                     ValidateIssuer = true, //enable issuer validation

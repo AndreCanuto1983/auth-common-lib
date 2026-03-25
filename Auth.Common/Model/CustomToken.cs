@@ -6,26 +6,35 @@ namespace Auth.Common.Lib.Model
 {
     public class CustomToken
     {
-        [Required(ErrorMessage = "Email is required")]
+        [DataType(DataType.Text)]
+        [DefaultValue(null)]
+        public string Name { get; set; }
+
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
-
-        [Required(ErrorMessage = "Roles is required. Ex: Visitor, Common, Manager, Admin")]
+                
         [DataType(DataType.Text)]
+        [DisplayName("Ex: Visitor, Common, Manager, Admin")]
         [DefaultValue(nameof(DefaultRoles.Common))]
-        public string Roles { get; set; }
+        public string Roles { get; set; }        
 
-        [Required(ErrorMessage = "Channel is required")]
-        [DataType(DataType.Text)]
-        [DefaultValue("99")]
-        public string Channel { get; set; }
-
-        [DefaultValue(180)]
+        [DefaultValue(60)]
         [DataType(DataType.Duration)]
-        [Required(ErrorMessage = "ExpiryTimeInMinutes is required. Default 180 minutes = 3 hours")]
         public double ExpiryTimeInMinutes { get; set; }
 
-        [DefaultValue("DXZN0F5CZD3830")]        
+        [DataType(DataType.Text)]
+        [DefaultValue(null)]
+        public string AccountStatus { get; set; }
+
+        [DisplayName("You can provide the customer ID as a numeric, string, or object, whichever you need.")]
+        [DefaultValue(null)]
+        public object CustomerId { get; set; }
+
+        [DisplayName("You can provide the user ID as a numeric, string, or object, whichever you need.")]
+        [DefaultValue(null)]
+        public object UserId { get; set; }
+
+        [DefaultValue(null)]        
         public string Cnpj { get; set; }
     }
 }

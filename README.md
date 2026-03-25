@@ -5,17 +5,20 @@ A .NET library for generating, validating, and configuring JWT authentication, s
 ##
 - Backward compatibility with .Net versions 6, 8, 9, and 10.
 
+# Melhorias nesta versão
+- Improvement in the custom token generation function and adding new parameters in the token object with predefined data
+
 ## Nuget Download
 
-- Version 1.0.5 has a new method that generates dynamic claims for the token when a level 1 object is provided.
+- Version 1.0.6 has a new method that generates dynamic claims for the token when a level 1 object is provided.
 
 ```
-dotnet add package Auth.Common.Lib --version 1.0.5
+dotnet add package Auth.Common.Lib --version 1.0.6
 ```
 
 ## Package Reference
 ```
-<PackageReference Include="Auth.Common.Lib" Version="1.0.5" />
+<PackageReference Include="Auth.Common.Lib" Version="1.0.6" />
 ```
 
 ## Features
@@ -55,6 +58,7 @@ Model for token generation:
 - `Channel` (required, e.g., "99")
 - `ExpiryTimeInMinutes` (required, default: 180)
 - `Cnpj` (optional, default: "DXZN0F5CZD3830")
+- ...
 
 ### Static Class: `Token`
 
@@ -68,34 +72,37 @@ Model for token generation:
 ## Usage Example
 
 ```csharp
-// Token generation custom object
+// Specific object for token generation
 
 var customToken = new CustomToken
 {
     Email = "user@example.com",
     Roles = "Admin",
-    Channel = "99",
     ExpiryTimeInMinutes = 180,
     Cnpj = "12345678901234"
 };
 
-or
+//Or
 
+// Dynamic object for token generation
+double expiryTimeInMinutes = 300;
 dynamic customTokenDynamic = new ExpandoObject
-        {
-            Email = "user@example.com",
-            Roles = "Admin",
-            Channel = "99",
-            ExpiryTimeInMinutes = 180,
-            Cnpj = "12345678901234"
-        };
+{
+    Email = "user@example.com",
+    Roles = "Admin",
+    Channel = "99",
+    UserId = "123SA4567890HA1234"
+};
 
-var customToken = Token.GenerateCustomToken(customTokenDynamic);
+// Generate token with dynamic object
+var customToken = Token.GenerateCustomToken(customTokenDynamic, expiryTimeInMinutes);
+
+// Generate token with specific object
 var token = Token.GenerateToken(customToken);
 
 // Token validation
-bool isValid = Token.GenerateCustomToken(token);
-bool isValid = Token.TokenValidate(token);
+bool isValid = token.IsValidToken(token);
+bool isValid = customToken.IsValidToken(token);
 ```
 
 ### ASP.NET Core Configuration
@@ -105,6 +112,14 @@ In your `Startup.cs` or `Program.cs` project builder:
 
 ```csharp
 services.AddJwtAuthSettings();
+```
+
+### Do not forget to inform the environment variables
+Example informing the environment variable in launchSettings.json
+```
+"DEFAULTSECRET": "09832ho23h09r32hre...",
+"ISSUER": "Canuto",
+"AUDIENCE": "canuto-api"
 ```
 
 ## Requirements

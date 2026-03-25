@@ -11,7 +11,11 @@ namespace Auth.Common.Lib.Provider
 {
     public static class Token
     {
-        public static string GenerateCustomToken(dynamic customData)
+        /*
+         * Generate the token through dynamic data from an object, example: { Name = "Andrew Canuto", Role = "Admin" }
+         * If the token expiration time is not specified, it will start with 120 minutes, which is equivalent to 2 hours
+         */
+        public static string GenerateCustomToken(dynamic customData, double expiryTimeInMinutes = 120)
         {
             var issuer = Environment.GetEnvironmentVariable("ISSUER");
             var audience = Environment.GetEnvironmentVariable("AUDIENCE");
@@ -33,9 +37,7 @@ namespace Auth.Common.Lib.Provider
                 Subject = new ClaimsIdentity(claims),
                 Issuer = issuer,
                 Audience = audience,
-                Expires = customData.ExpiryTimeInMinutes.HasValue
-                    ? DateTime.UtcNow.AddMinutes(customData.ExpiryTimeInMinutes.Value)
-                    : DateTime.UtcNow.AddMinutes(60), //If is null, add 1 hour to the token expiration time.
+                Expires = DateTime.UtcNow.AddMinutes(expiryTimeInMinutes),
                 SigningCredentials = new SigningCredentials(
                     new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secret)),
                     SecurityAlgorithms.HmacSha256Signature),
@@ -49,24 +51,44 @@ namespace Auth.Common.Lib.Provider
             return tokenHandler.WriteToken(token);
         }
 
-        public static string GenerateToken(CustomToken customToken)
+        /*
+         * Generate a token through a specific object
+         */
+        public static string GenerateToken(this CustomToken customToken)
         {
             var issuer = Environment.GetEnvironmentVariable("ISSUER");
             var audience = Environment.GetEnvironmentVariable("AUDIENCE");
             var secret = Environment.GetEnvironmentVariable("DEFAULTSECRET");
 
+            var claims = new List<Claim>();
+
+            if (!string.IsNullOrEmpty(customToken?.Name))
+                claims.Add(new Claim(ClaimTypes.Name, customToken.Name));
+
+            if (!string.IsNullOrEmpty(customToken?.Email))
+                claims.Add(new Claim(ClaimTypes.Email, customToken.Email));
+
+            if (!string.IsNullOrEmpty(customToken?.Roles))
+                claims.Add(new Claim(ClaimTypes.Role, customToken.Roles));
+
+            if (customToken?.UserId != null)
+                claims.Add(new Claim("UserId", customToken.UserId.ToString()));
+
+            if (customToken?.CustomerId != null)
+                claims.Add(new Claim("CustomerId", customToken.CustomerId.ToString()));
+
+            if (!string.IsNullOrEmpty(customToken?.AccountStatus))
+                claims.Add(new Claim("AccountStatus", customToken.AccountStatus));
+
+            if (!string.IsNullOrEmpty(customToken?.Cnpj))
+                claims.Add(new Claim("Cnpj", customToken.Cnpj));
+
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = new ClaimsIdentity(new Claim[]
-                {
-                    new(ClaimTypes.Name, customToken.Email),
-                    new(ClaimTypes.Role, customToken.Roles),
-                    new("Channel", customToken.Channel),
-                    new("Cnpj", customToken.Cnpj)
-                }),
+                Subject = new ClaimsIdentity(claims),
                 Issuer = issuer,
                 Audience = audience,
-                Expires = DateTime.UtcNow.AddMinutes(customToken.ExpiryTimeInMinutes),
+                Expires = DateTime.UtcNow.AddMinutes(customToken?.ExpiryTimeInMinutes ?? 60),
                 SigningCredentials = new SigningCredentials(
                     new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secret)),
                     SecurityAlgorithms.HmacSha256Signature),
@@ -80,7 +102,10 @@ namespace Auth.Common.Lib.Provider
             return tokenHandler.WriteToken(token);
         }
 
-        public static bool TokenValidate(string token)
+        /*
+         * Check if a token is valid
+         */
+        public static bool IsValidToken(this string token)
         {
             try
             {
