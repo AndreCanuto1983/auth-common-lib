@@ -13,12 +13,12 @@ A .NET library for generating, validating, and configuring JWT authentication, s
 - Version 1.0.6 has a new method that generates dynamic claims for the token when a level 1 object is provided.
 
 ```
-dotnet add package Auth.Common.Lib --version 1.0.6
+dotnet add package Auth.Common.Lib --version 1.0.8
 ```
 
 ## Package Reference
 ```
-<PackageReference Include="Auth.Common.Lib" Version="1.0.6" />
+<PackageReference Include="Auth.Common.Lib" Version="1.0.8" />
 ```
 
 ## Features

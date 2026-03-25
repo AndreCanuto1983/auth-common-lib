@@ -4,7 +4,7 @@
 		<TargetFrameworks>net10.0;net9.0;net8.0;net6.0</TargetFrameworks>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<PackageId>Auth.Common.Lib</PackageId>
-		<Version>1.0.6</Version>
+		<Version>1.0.8</Version>
 		<Authors>Canuto</Authors>
 		<Company>ALCS</Company>
 		<Title>Auth Common Lib</Title>
@@ -13,27 +13,18 @@
 
 	<ItemGroup Condition="'$(TargetFramework)' == 'net10.0'">
 		<PackageReference Include="Microsoft.IdentityModel.Tokens" Version="8.16.0" />
-		<PackageReference Include="Swashbuckle.AspNetCore.Annotations">
-		  <Version>10.1.6</Version>
-		</PackageReference>
 		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.16.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.5" />
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(TargetFramework)' == 'net9.0'">
 		<PackageReference Include="Microsoft.IdentityModel.Tokens" Version="8.16.0" />
-		<PackageReference Include="Swashbuckle.AspNetCore.Annotations">
-		  <Version>10.1.6</Version>
-		</PackageReference>
 		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.16.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.12" />
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(TargetFramework)' == 'net8.0'">
 		<PackageReference Include="Microsoft.IdentityModel.Tokens" Version="8.16.0" />
-		<PackageReference Include="Swashbuckle.AspNetCore.Annotations">
-		  <Version>10.1.6</Version>
-		</PackageReference>
 		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.16.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.24" />
 	</ItemGroup>
