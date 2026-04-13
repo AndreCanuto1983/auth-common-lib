@@ -24,17 +24,17 @@ namespace Auth.Common.Lib.Provider
                 x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             }).AddJwtBearer(x =>
             {
-                x.RequireHttpsMetadata = false; //require https
+                x.RequireHttpsMetadata = false; ///require https
                 x.SaveToken = true;                
                 x.TokenValidationParameters = new TokenValidationParameters
                 {                    
-                    ValidateIssuerSigningKey = true, //enable key validation
+                    ValidateIssuerSigningKey = true, ///enable key validation
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secret)), //secret
-                    ValidateIssuer = true, //enable issuer validation
-                    ValidIssuer = issuer, //validate the issuer
-                    ValidateAudience = true, //enable token origin validation
-                    ValidAudience = audience, //validate the token origin (url). You can pass a collection if you want
-                    RequireSignedTokens = true //validate token signature, basically the SigningCredentials
+                    ValidateIssuer = true, ///enable issuer validation
+                    ValidIssuer = issuer, ///validate the issuer
+                    ValidateAudience = true, ///enable token origin validation
+                    ValidAudience = audience, ///validate the token origin (url). You can pass a collection if you want
+                    RequireSignedTokens = true ///validate token signature, basically the SigningCredentials
                 };
             });
         }

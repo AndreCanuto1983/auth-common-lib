@@ -122,12 +122,12 @@ namespace Auth.Common.Lib.Provider
                     ValidateIssuerSigningKey = true, ///enable key validation
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secret)), ///key from line 11
                     ValidateIssuer = true, ///enable issuer validation
-                    ValidIssuer = issuer, //validate issuer
+                    ValidIssuer = issuer, ///validate issuer
                     ValidateAudience = true, ///enable token origin validation
                     ValidAudience = audience, ///validate token origin (url). I can pass a collection if I want
                     ValidateLifetime = true,
                     RequireExpirationTime = true,
-                    RequireSignedTokens = true //validate token signature, basically the SigningCredentials
+                    RequireSignedTokens = true ///validate token signature, basically the SigningCredentials
                 };
 
                 var tokenHandler = new JwtSecurityTokenHandler();
