@@ -4,11 +4,12 @@
 		<TargetFrameworks>net10.0;net9.0;net8.0;net6.0</TargetFrameworks>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<PackageId>Auth.Common.Lib</PackageId>
-		<Version>1.0.9</Version>
-		<Authors>Canuto</Authors>
+		<Version>1.0.9</Version>		
+		<Authors>Andre Canuto</Authors>
 		<Company>ALCS</Company>
 		<Title>Auth Common Lib</Title>
 		<Description>Default authentication for projects</Description>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
 	</PropertyGroup>
 
 	<ItemGroup Condition="'$(TargetFramework)' == 'net10.0'">

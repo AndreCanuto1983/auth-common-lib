@@ -2,10 +2,12 @@
 
 A .NET library for generating, validating, and configuring JWT authentication, supporting custom roles and easy integration into ASP.NET applications.
 
-##
-- Backward compatibility with .Net versions 6, 8, 9, and 10.
+## Author
+- **Name:** André Canuto
+- **Profession:** Software engineer specializing in .Net C#.
 
 # Improvements in version 1.0.9
+- Backward compatibility with .Net versions 6, 8, 9, and 10.
 - Everything from the previous version
 - Implemented method to read the token and return the claims.
 - Dynamic secrets generator for use in APIs
