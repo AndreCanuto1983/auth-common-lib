@@ -48,8 +48,8 @@ dotnet add package Auth.Common.Lib --version 1.0.10
 ## Main Components
 
 ### Static Class: `Token`
-- `string token = Token.GenerateCustomToken(customTokenDynamic, expiryTimeInMinutes)`: Generates a JWT token with the provided data.
-- `bool isValid = customToken.IsValidToken(token);`: Validates a JWT token according to environment settings.
+- `string token = Token.GenerateCustomToken(customTokenDynamic, expiryTimeInMinutes)` -> Generates a JWT token with the provided data.
+- `bool isValid = customToken.IsValidToken();` -> Validates a JWT token according to environment settings, or use `bool isValid = Token.IsValidToken(token);`.
   
 ## Environment Configuration
 
