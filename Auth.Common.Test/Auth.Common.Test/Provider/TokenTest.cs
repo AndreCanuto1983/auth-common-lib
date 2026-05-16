@@ -20,10 +20,12 @@ namespace Auth.Common.Lib.Test.Provider
                 Cnpj = "12345678000199"
             };
 
+            var secret = Token.GenerateSecret();
+
             // Configura variáveis de ambiente usadas pelo método
             Environment.SetEnvironmentVariable("ISSUER", "TestIssuer");
             Environment.SetEnvironmentVariable("AUDIENCE", "TestAudience");
-            Environment.SetEnvironmentVariable("DEFAULTSECRET", "segredo_super_secreto_para_testes");
+            Environment.SetEnvironmentVariable("DEFAULTSECRET", secret);
 
             // Act
             string token = Token.GenerateCustomToken(customData);
