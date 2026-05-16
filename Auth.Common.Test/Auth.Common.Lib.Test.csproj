@@ -15,11 +15,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Using Include="Xunit" />
+    <ProjectReference Include="..\Auth.Common\Auth.Common.Lib.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Auth.Common\Auth.Common.Lib.csproj" />
+    <Using Include="Xunit" />
   </ItemGroup>
 
 </Project>
