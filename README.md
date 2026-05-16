@@ -61,9 +61,12 @@ Set the following environment variables for correct operation:
 - Example informing the environment variable in Properties/launchSettings.json
 
 ```
-"DEFAULTSECRET": "09832ho23h09r32hre...",
-"ISSUER": "Canuto",
-"AUDIENCE": "canuto-api"
+
+"environmentVariables": {
+    "DEFAULTSECRET": "09832ho23h09r32hre...",
+    "ISSUER": "Canuto",
+    "AUDIENCE": "canuto-api"
+}
 
 ```
 
