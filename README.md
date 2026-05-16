@@ -6,6 +6,12 @@ A .NET library for generating, validating, and configuring JWT authentication, s
 - **Name:** André Canuto
 - **Profession:** Software engineer specializing in .Net C#.
 
+## Features
+- **JWT token generation** with custom information (email, roles, channel, CNPJ, expiration time).
+- **JWT token validation** according to environment and security parameters.
+- **Default roles enumeration** for access control.
+- **Simplified JWT configuration** for ASP.NET Core via service extension.
+  
 # Improvements in version 1.0.10
 - The fixed model and method for creating the token have been discontinued. Now, only the dynamic method is used, where any desired parameter can be added to the token.
 - Maintains compatibility with the previous version.
@@ -35,12 +41,6 @@ dotnet add package Auth.Common.Lib --version 1.0.10
 ```
 <PackageReference Include="Auth.Common.Lib" Version="1.0.10" />
 ```
-
-## Features
-- **JWT token generation** with custom information (email, roles, channel, CNPJ, expiration time).
-- **JWT token validation** according to environment and security parameters.
-- **Default roles enumeration** for access control.
-- **Simplified JWT configuration** for ASP.NET Core via service extension.
 
 ## Installation
 - Add a reference to the `Auth.Common.Lib` project in your .NET 10, 9, 8, 6 solution.
