@@ -63,7 +63,7 @@ Set the following environment variables for correct operation:
 ```
 
 "environmentVariables": {
-    "DEFAULTSECRET": "09832ho23h09r32hre...",
+    "DEFAULTSECRET": "KJ12B3L123LK1LK7...",
     "ISSUER": "Canuto",
     "AUDIENCE": "canuto-api"
 }
