@@ -45,6 +45,12 @@ dotnet add package Auth.Common.Lib --version 1.0.10
 ## Installation
 - Add a reference to the `Auth.Common.Lib` project in your .NET 10, 9, 8, 6 solution.
 
+## Main Components
+
+### Static Class: `Token`
+- `string token = Token.GenerateCustomToken(customTokenDynamic, expiryTimeInMinutes)`: Generates a JWT token with the provided data.
+- `bool isValid = customToken.IsValidToken(token);`: Validates a JWT token according to environment settings.
+  
 ## Environment Configuration
 
 Set the following environment variables for correct operation:
@@ -52,11 +58,14 @@ Set the following environment variables for correct operation:
 - `AUDIENCE`: Token audience.
 - `DEFAULTSECRET`: Secret key for signing tokens.
 
-## Main Components
+- Example informing the environment variable in Properties/launchSettings.json
 
-### Static Class: `Token`
-- `string token = Token.GenerateCustomToken(customTokenDynamic, expiryTimeInMinutes)`: Generates a JWT token with the provided data.
-- `bool isValid = customToken.IsValidToken(token);`: Validates a JWT token according to environment settings.
+```
+"DEFAULTSECRET": "09832ho23h09r32hre...",
+"ISSUER": "Canuto",
+"AUDIENCE": "canuto-api"
+
+```
 
 ### ASP.NET Core Configuration
 - For Swagger to validate your token, you can implement this in your projects that will receive the token for validation.
@@ -66,16 +75,6 @@ In your `Program.cs` or `Startup.cs` project builder:
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddJwtAuthSettings();
-
-```
-
-### Do not forget to inform the environment variables
-- Example informing the environment variable in Properties/launchSettings.json
-
-```
-"DEFAULTSECRET": "09832ho23h09r32hre...",
-"ISSUER": "Canuto",
-"AUDIENCE": "canuto-api"
 
 ```
 
