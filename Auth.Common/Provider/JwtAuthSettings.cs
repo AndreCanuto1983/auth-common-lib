@@ -7,8 +7,8 @@ using System.Text;
 namespace Auth.Common.Lib.Provider
 {
     /*
-     * In the startup or program, use builder.Services.AddJwtAuthSettings(); or services.AddJwtAuthSettings(); so that token validation in Swagger works. 
-     * Don't forget to have the environment variables configured.
+     * In the startup or program, use builder.Services.AddJwtAuthSettings(); or services.AddJwtAuthSettings(); so that token validation in Swagger works.      
+     * Don't forget to create the environment variable in your project's properties file.
      */
     public static class JwtAuthSettings
     {

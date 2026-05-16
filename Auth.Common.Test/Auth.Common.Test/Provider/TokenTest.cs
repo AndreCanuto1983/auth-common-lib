@@ -1,5 +1,4 @@
-﻿using Auth.Common.Lib.Model;
-using Auth.Common.Lib.Provider;
+﻿using Auth.Common.Lib.Provider;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -50,64 +49,7 @@ namespace Auth.Common.Lib.Test.Provider
             Assert.True(jwtToken.ValidTo <= DateTime.UtcNow.AddMinutes(120));
             Assert.True(jwtToken.ValidTo > DateTime.UtcNow);
             Assert.True(jwtToken2.ValidTo > DateTime.UtcNow);
-        }
-
-        [Fact]
-        public void GenerateToken_ReturnsValidJwtToken()
-        {
-            // Arrange
-            Environment.SetEnvironmentVariable("ISSUER", "test-issuer");
-            Environment.SetEnvironmentVariable("AUDIENCE", "test-audience");
-            Environment.SetEnvironmentVariable("DEFAULTSECRET", "supersecretkey12345678901234567890");
-
-            var customToken = new CustomToken
-            {
-                Email = "user@example.com",
-                Roles = "Admin",
-                Name = "Canuto",
-                ExpiryTimeInMinutes = 60,
-                Cnpj = "12345678901234"
-            };
-
-            // Act
-            var jwt = Token.GenerateToken(customToken);
-
-            // Assert
-            Assert.False(string.IsNullOrWhiteSpace(jwt));
-        }
-
-        [Fact]
-        public void TokenValidate_ValidToken_ReturnsTrue()
-        {
-            // Arrange
-            var prevIssuer = Environment.GetEnvironmentVariable("ISSUER");
-            try
-            {
-                Environment.SetEnvironmentVariable("ISSUER", "test-issuer");
-                Environment.SetEnvironmentVariable("AUDIENCE", "test-audience");
-                Environment.SetEnvironmentVariable("DEFAULTSECRET", "supersecretkey12345678901234567890");
-
-                var customToken = new CustomToken
-                {
-                    Email = "user@example.com",
-                    Roles = "Admin",
-                    UserId = "99",
-                    ExpiryTimeInMinutes = 60,
-                    Cnpj = "12345678901234"
-                };
-                var jwt = Token.GenerateToken(customToken);
-
-                // Act
-                var isValid = Token.IsValidToken(jwt);
-
-                // Assert
-                Assert.True(isValid);
-            }
-            finally
-            {
-                Environment.SetEnvironmentVariable("ISSUER", prevIssuer);
-            }
-        }
+        }        
 
         [Fact]
         public void TokenValidate_InvalidToken_ReturnsFalse()
@@ -177,7 +119,6 @@ namespace Auth.Common.Lib.Test.Provider
 
             // Assert
             Assert.Equal(string.Empty, result);
-
         }
     }
 }

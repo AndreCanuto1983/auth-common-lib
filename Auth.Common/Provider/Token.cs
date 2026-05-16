@@ -1,5 +1,4 @@
-﻿using Auth.Common.Lib.Model;
-using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -50,58 +49,7 @@ namespace Auth.Common.Lib.Provider
             var token = tokenHandler.CreateToken(tokenDescriptor);
 
             return tokenHandler.WriteToken(token);
-        }
-
-        /*
-         * Generate a token through a specific object
-         */
-        public static string GenerateToken(this CustomToken customToken)
-        {
-            var issuer = Environment.GetEnvironmentVariable("ISSUER");
-            var audience = Environment.GetEnvironmentVariable("AUDIENCE");
-            var secret = Environment.GetEnvironmentVariable("DEFAULTSECRET");
-
-            var claims = new List<Claim>();
-
-            if (!string.IsNullOrEmpty(customToken?.Name))
-                claims.Add(new Claim(ClaimTypes.Name, customToken.Name));
-
-            if (!string.IsNullOrEmpty(customToken?.Email))
-                claims.Add(new Claim(ClaimTypes.Email, customToken.Email));
-
-            if (!string.IsNullOrEmpty(customToken?.Roles))
-                claims.Add(new Claim(ClaimTypes.Role, customToken.Roles));
-
-            if (customToken?.UserId != null)
-                claims.Add(new Claim("UserId", customToken.UserId.ToString()));
-
-            if (customToken?.CustomerId != null)
-                claims.Add(new Claim("CustomerId", customToken.CustomerId.ToString()));
-
-            if (!string.IsNullOrEmpty(customToken?.AccountStatus))
-                claims.Add(new Claim("AccountStatus", customToken.AccountStatus));
-
-            if (!string.IsNullOrEmpty(customToken?.Cnpj))
-                claims.Add(new Claim("Cnpj", customToken.Cnpj));
-
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(claims),
-                Issuer = issuer,
-                Audience = audience,
-                Expires = DateTime.UtcNow.AddMinutes(customToken?.ExpiryTimeInMinutes ?? 60),
-                SigningCredentials = new SigningCredentials(
-                    new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secret)),
-                    SecurityAlgorithms.HmacSha512Signature),
-                NotBefore = DateTime.UtcNow
-            };
-
-            var tokenHandler = new JwtSecurityTokenHandler();
-
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-
-            return tokenHandler.WriteToken(token);
-        }
+        }        
 
         /*
          * Check if a token is valid
