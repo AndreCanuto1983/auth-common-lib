@@ -54,31 +54,33 @@ Set the following environment variables for correct operation:
 
 ## Main Components
 
-### Enum: `DefaultRoles`
-
-Enumeration of default roles:
-- `Visitor`
-- `Common`
-- `Manager`
-- `Admin`
-
-### Class: `CustomToken`
-Model for token generation:
-- `Email` (required)
-- `Roles` (required, e.g., Visitor, Common, Manager, Admin)
-- `Channel` (required, e.g., "99")
-- `ExpiryTimeInMinutes` (required, default: 180)
-- `Cnpj` (optional, default: "DXZN0F5CZD3830")
-- ...
-
 ### Static Class: `Token`
-- `string GenerateToken(CustomToken customToken)`: Generates a JWT token with the provided data.
-- `bool TokenValidate(string token)`: Validates a JWT token according to environment settings.
+- `string token = Token.GenerateCustomToken(customTokenDynamic, expiryTimeInMinutes)`: Generates a JWT token with the provided data.
+- `bool isValid = customToken.IsValidToken(token);`: Validates a JWT token according to environment settings.
 
-### Static Class: `JwtAuthSettings`
-- `void AddJwtAuthSettings(this IServiceCollection services)`: Extension to configure JWT authentication in the ASP.NET Core pipeline.
+### ASP.NET Core Configuration
+- For Swagger to validate your token, you can implement this in your projects that will receive the token for validation.
+In your `Program.cs` or `Startup.cs` project builder:
+
+```csharp
+
+var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddJwtAuthSettings();
+
+```
+
+### Do not forget to inform the environment variables
+- Example informing the environment variable in Properties/launchSettings.json
+
+```
+"DEFAULTSECRET": "09832ho23h09r32hre...",
+"ISSUER": "Canuto",
+"AUDIENCE": "canuto-api"
+
+```
 
 ## Usage Example
+
 ```csharp
 
 // This is a dynamic object for generating tokens; you can add any information, as long as you follow the example below, where you must send the attribute and the value.
@@ -91,32 +93,12 @@ dynamic customTokenDynamic = new ExpandoObject
     CustomerId = "LKASHE9823ODKJ23"
 };
 
-// Generate token with dynamic object
-// If you do not specify the expiryTimeInMinutes, the token expiration time is automatically set to 120 minutes UTC.
+// Generate token with dynamic object, if you do not specify the expiryTimeInMinutes, the token expiration time is automatically set to 120 minutes UTC.
 double expiryTimeInMinutes = 300;
 var customToken = Token.GenerateCustomToken(customTokenDynamic, expiryTimeInMinutes);
 
-// Token validation
+// Checks if the token is valid, if necessary.
 bool isValid = customToken.IsValidToken(token);
-
-```
-
-### ASP.NET Core Configuration
-- For Swagger to validate your token, you can implement this in your projects that will receive the token for validation.
-In your `Startup.cs` or `Program.cs` project builder:
-
-```csharp
-
-services.AddJwtAuthSettings();
-
-```
-
-### Do not forget to inform the environment variables
-- Example informing the environment variable in launchSettings.json
-```
-"DEFAULTSECRET": "09832ho23h09r32hre...",
-"ISSUER": "Canuto",
-"AUDIENCE": "canuto-api"
 
 ```
 
